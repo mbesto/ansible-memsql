@@ -1,0 +1,19 @@
+---
+- hosts: memsql
+  vars: 
+    root_path: /home/vagrant/
+  sudo: yes
+
+  tasks:
+  - name: Download MemSQL community edition
+    get_url: url=http://download.memsql.com/memsql-ops-4.0.28/memsql-ops-4.0.28.tar.gz dest={{ root_path }}memsql-ops-4.0.28.tar.gz
+
+  - name: Unpack MemSQL
+    shell: "tar -xvzf {{ root_path }}memsql-ops-4.0.28.tar.gz"
+
+  - name: Install MemSQL 
+    shell: yes '' | "{{ root_path }}memsql-ops-4.0.28/install.sh"
+    ignore_errors: yes
+
+  - name: MySQL Client 
+    apt: name=mysql-client-core-5.6
